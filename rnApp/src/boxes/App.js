@@ -5,12 +5,12 @@ import {
   StyleSheet
 } from 'react-native';
 
+import Index from 'boxes/Index';
+
 class App extends Component {
   render() {
     return (
-      <View style={style.wrapper}>
-        <Text style={style.helloWords}>Hello, RN!</Text>
-      </View>
+      <Index/>
     );
   }
 }
