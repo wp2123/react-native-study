@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   ListView,
-  Dimensions
+  Dimensions,
+  RefreshControl
 } from 'react-native';
 
 import MessageItem from 'buss/MessageItem';
@@ -36,8 +37,38 @@ class Messages extends Component {
     });
     this.state = {
       dataSource: ds.cloneWithRows(mockData),
-      data: mockData
+      data: mockData,
+      refreshing: true
     }
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        refreshing: false
+      });
+    }, 2000);
+  }
+  init() {
+    this.setState({
+      refreshing: true
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          data: mockData,
+          dataSource: this.state.dataSource.cloneWithRows(mockData),
+          refreshing: false
+        });
+      }, 2000);
+    });
+  }
+  nextPage() {
+    setTimeout(() => {
+      let newData = this.state.data.concat(mockData);
+      this.setState({
+        data: newData,
+        dataSource: this.state.dataSource.cloneWithRows(newData)
+      });
+    }, 1000);
   }
   render() {
     return (
@@ -46,6 +77,11 @@ class Messages extends Component {
         <ListView
           dataSource={this.state.dataSource}
           enableEmptySections={true}
+          onEndReachedThreshold={10}
+          refreshControl={<RefreshControl
+            onRefresh={() => this.init()}
+            refreshing={this.state.refreshing}
+          />}
           renderHeader={() => <Text>我是listview的header</Text>}
           renderFooter={() => <Text>我是listview的footer</Text>}
           renderSectionHeader={() => <Text>我是listview的sectionHeader</Text>}
@@ -53,6 +89,7 @@ class Messages extends Component {
           renderRow={(rowData) => {
             return <MessageItem {...rowData}/>;
           }}
+          onEndReached={() => this.nextPage()}
         />
       </View>
     );
