@@ -62,12 +62,12 @@ class Index extends Component {
         </View>
         <View style={style.body}>
           <Navigator
-            initialRoute={{title: '首页', index: 0}}
+            initialRoute={{title: '消息', component: Messages}}
             renderScene={(route, navigator) => {
               if (!this._navigator) {
                 this._navigator = navigator;
               }
-              let NewComponent = route.component || Messages;
+              let NewComponent = route.component;
               return (<NewComponent {...route.params} navigator={navigator} />);
             }}
           />
