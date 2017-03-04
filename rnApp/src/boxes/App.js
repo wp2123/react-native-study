@@ -5,12 +5,17 @@ import {
   StyleSheet
 } from 'react-native';
 
+import {Provider} from 'react-redux';
+import store from 'reducers';
+
 import Index from 'boxes/Index';
 
 class App extends Component {
   render() {
     return (
-      <Index/>
+      <Provider store={store}>
+        <Index/>
+      </Provider>
     );
   }
 }
