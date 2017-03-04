@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import MessageItem from 'buss/MessageItem';
+import MessageDetail from 'boxes/MessageDetail';
 
 let pageWidth = Dimensions.get('window').width;
 
@@ -87,7 +88,13 @@ class Messages extends Component {
           renderSectionHeader={() => <Text>我是listview的sectionHeader</Text>}
           renderSeparator={(sectionId, rowId) => <View key={sectionId + '-' + rowId} style={{width: pageWidth, height: 1, backgroundColor: '#ddd'}}></View>}
           renderRow={(rowData) => {
-            return <MessageItem {...rowData}/>;
+            return <MessageItem {...rowData} onPress={() => {
+              this.props.navigator.push({
+                title: '消息详情',
+                name: '消息详情',
+                component: MessageDetail
+              });
+            }}/>;
           }}
           onEndReached={() => this.nextPage()}
         />

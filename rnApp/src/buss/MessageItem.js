@@ -6,7 +6,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from 'react-native';
 
 let pageWidth = Dimensions.get('window').width;
@@ -14,19 +15,22 @@ let pageWidth = Dimensions.get('window').width;
 class MessageItem extends Component {
   static propTypes = {
     name: PropTypes.string,
-    message: PropTypes.string
+    message: PropTypes.string,
+    onPress: PropTypes.func
   };
   render() {
     return (
-      <View style={style.wrapper}>
-        <View style={style.leftContent}>
-          <View style={style.avator}></View>
+      <TouchableOpacity onPress={() => this.props.onPress()}>
+        <View style={style.wrapper}>
+          <View style={style.leftContent}>
+            <View style={style.avator}></View>
+          </View>
+          <View style={style.rightContent}>
+            <Text style={style.name}>{this.props.name}</Text>
+            <Text style={style.message} numberOfLines={1}>{this.props.message}</Text>
+          </View>
         </View>
-        <View style={style.rightContent}>
-          <Text style={style.name}>{this.props.name}</Text>
-          <Text style={style.message} numberOfLines={1}>{this.props.message}</Text>
-        </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
